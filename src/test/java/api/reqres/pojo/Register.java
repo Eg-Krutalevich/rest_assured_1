@@ -1,4 +1,4 @@
-package api.reqres.registration;
+package api.reqres.pojo;
 
 public class Register {
     private String email;

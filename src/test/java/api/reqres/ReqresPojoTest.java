@@ -1,13 +1,13 @@
 package api.reqres;
 
-import api.reqres.registration.Register;
-import api.reqres.registration.SuccessReg;
-import api.reqres.registration.UnSuccessReg;
-import api.reqres.colors.Data;
+import api.reqres.pojo.Register;
+import api.reqres.pojo.SuccessReg;
+import api.reqres.pojo.UnSuccessReg;
+import api.reqres.pojo.ColorData;
 import api.reqres.spec.Specifications;
-import api.reqres.users.UserData;
-import api.reqres.users.UserTime;
-import api.reqres.users.UserTimeResponse;
+import api.reqres.pojo.UserData;
+import api.reqres.pojo.UserTime;
+import api.reqres.pojo.UserTimeResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -97,13 +97,13 @@ public class ReqresPojoTest {
     public void sortYearsTest() {
         Specifications.installSpecification(Specifications.requestSpecification(URL), Specifications.responseSpecificationUnknown(200));
 
-        List<Data> colors = given() //
+        List<ColorData> colors = given() //
                 .get("/api/unknown")
                 .then().log().all()
-                .extract().body().jsonPath().getList("data", Data.class);
+                .extract().body().jsonPath().getList("data", ColorData.class);
 
         //actual result
-        List<Integer> years = colors.stream().map(Data::getYear).collect(Collectors.toList());
+        List<Integer> years = colors.stream().map(ColorData::getYear).collect(Collectors.toList());
         //excepted result
         List<Integer> sortYears = years.stream().sorted().collect(Collectors.toList());
 

@@ -1,4 +1,5 @@
-package api.reqres.users;
+package api.reqres.pojo;
+
 
 public class UserTimeResponse extends UserTime {
     private String updatedAt;

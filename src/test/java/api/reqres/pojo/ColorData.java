@@ -1,13 +1,13 @@
-package api.reqres.colors;
+package api.reqres.pojo;
 
-public class Data {
+public class ColorData {
     public Integer id;
     public String name;
     public Integer year;
     public String color;
     public String pantone_value;
 
-    public Data(Integer id, String name, Integer year, String color, String pantone_value) {
+    public ColorData(Integer id, String name, Integer year, String color, String pantone_value) {
         this.id = id;
         this.name = name;
         this.year = year;

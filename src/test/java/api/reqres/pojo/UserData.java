@@ -1,4 +1,4 @@
-package api.reqres.users;
+package api.reqres.pojo;
 
 public class UserData {
     //использовать ссылочные типы данных
