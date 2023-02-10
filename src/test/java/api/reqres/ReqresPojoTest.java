@@ -22,22 +22,16 @@ public class ReqresPojoTest {
 
     @Test
     public void checkAvatarAndIdTest() {
-        //GET
         Specifications.installSpecification(Specifications.requestSpecification(URL), Specifications.responseSpecificationUnknown(200));
         List<UserData> users = given() //
                 .get("/api/users?page=2")
                 .then().log().all()
                 .extract().body().jsonPath().getList("data", UserData.class);
 
-        //1 СПОСОБ
-        //сравнение, что в avatar содержится id, x - счетчик экземплера класса
         users.forEach(x -> Assert.assertTrue(x.getAvatar().contains(x.getId().toString())));
-
-        //сравнение, что email оканчивается на @reqres.in
+        
         Assert.assertTrue(users.stream().allMatch(x -> x.getEmail().endsWith("@reqres.in")));
 
-        //2 СПОСОБ
-        //сравнение, что в avatar содержится id
         List<String> avatars = users.stream().map(UserData::getAvatar).toList(); //преоразовать к List (toList())
         List<String> ids = users.stream().map(x -> x.getId().toString()).toList(); //преобразовали к String
 
@@ -47,17 +41,13 @@ public class ReqresPojoTest {
 
     }
 
-    //POST
-    //создание успешного пользователя
     @Test
     public void successRegTest() {
         Specifications.installSpecification(Specifications.requestSpecification(URL), Specifications.responseSpecificationUnknown(200));
-
-        //ожидаемый результат
+        
         Integer id = 4;
         String token = "QpwL5tke4Pnpja7X4";
 
-        //пользователь
         Register user = new Register("eve.holt@reqres.in", "pistol");
         SuccessReg successReg = given()
                 .body(user)
@@ -74,13 +64,10 @@ public class ReqresPojoTest {
 
     }
 
-    //создание пользователя с ошибкой 400
-    @Test
     public void unSuccessRegTest() {
         Specifications.installSpecification(Specifications.requestSpecification(URL), Specifications.responseSpecificationUnknown(400));
 
         String error = "Missing password";
-        //пользователь
         Register user = new Register("sydney@fife", "");
         UnSuccessReg unSuccessReg = given()
                 .body(user)
@@ -102,9 +89,7 @@ public class ReqresPojoTest {
                 .then().log().all()
                 .extract().body().jsonPath().getList("data", ColorData.class);
 
-        //actual result
         List<Integer> years = colors.stream().map(ColorData::getYear).collect(Collectors.toList());
-        //excepted result
         List<Integer> sortYears = years.stream().sorted().collect(Collectors.toList());
 
         Assert.assertEquals(sortYears, years);
@@ -112,8 +97,7 @@ public class ReqresPojoTest {
         System.out.println(sortYears);
 
     }
-
-    //DELETE
+    
     @Test
     public void deleteUserTest() {
         Specifications.installSpecification(Specifications.requestSpecification(URL), Specifications.responseSpecificationUnknown(204));
@@ -124,7 +108,6 @@ public class ReqresPojoTest {
 
     }
 
-    //сравнение времена сервера и времени из документации
     @Test
     public void timeTest() {
         Specifications.installSpecification(Specifications.requestSpecification(URL), Specifications.responseSpecificationUnknown(200));
@@ -145,7 +128,5 @@ public class ReqresPojoTest {
 
         System.out.println(currentTime);
         System.out.println(response.getUpdatedAt().replaceAll(regex, ""));
-
     }
-
 }
